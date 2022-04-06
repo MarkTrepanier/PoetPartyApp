@@ -4,11 +4,14 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 
 function WordGenScreen(props) {
   const [words, setWords] = useState([]);
+  const [numOfWords, setNumOfWords] = useState(3);
   useEffect(() => {
     const getWords = () =>
       axios
-        .get("https://random-word-api.herokuapp.com/word?number=10")
-        .then((res) => setWords(res.data) || console.log(res))
+        .get(`https://random-word-api.herokuapp.com/word?number=${numOfWords}`)
+        .then((res) => {
+          setWords(res.data, res.data.length);
+        })
         .catch((error) => Alert.alert("error loading words"));
     getWords();
   }, []);
