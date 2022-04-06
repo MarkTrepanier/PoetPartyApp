@@ -38,8 +38,15 @@ function WordGenScreen(props) {
       ? Alert.alert("Oops!", "minimum, 1 word")
       : setNumOfWords(numOfWords - 1);
   };
+
   const toggleSwitch = (word) => {
-    setWords(...words, !word.isEnabled);
+    setWords(
+      words.map((item) => {
+        return word.word === item.word
+          ? { word: word.word, isEnabled: !item.isEnabled }
+          : item;
+      })
+    );
   };
 
   return (
