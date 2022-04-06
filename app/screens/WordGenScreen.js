@@ -39,6 +39,10 @@ function WordGenScreen(props) {
       : setNumOfWords(numOfWords - 1);
   };
 
+  const remove = (word) => {
+    setWords(words.filter((item) => item.word !== word.word));
+  };
+
   const toggleSwitch = (word) => {
     setWords(
       words.map((item) => {
@@ -63,6 +67,7 @@ function WordGenScreen(props) {
               onValueChange={() => toggleSwitch(word)}
             />
             <Text key={word.word}>{word.word}</Text>
+            <Button title="Remove" onPress={() => remove(word)} />
           </View>
         ))}
       </ScrollView>
