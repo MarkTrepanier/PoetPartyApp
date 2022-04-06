@@ -7,6 +7,7 @@ import {
   ScrollView,
   Button,
   Alert,
+  Switch,
 } from "react-native";
 
 function WordGenScreen(props) {
@@ -42,7 +43,10 @@ function WordGenScreen(props) {
       <Button title="-" onPress={decrease} />
       <ScrollView>
         {words?.map((word) => (
-          <Text key={word}>{word}</Text>
+          <View>
+            <Switch />
+            <Text key={word}>{word}</Text>
+          </View>
         ))}
       </ScrollView>
     </View>
