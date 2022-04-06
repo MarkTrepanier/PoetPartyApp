@@ -18,7 +18,11 @@ function WordGenScreen(props) {
     axios
       .get(`https://random-word-api.herokuapp.com/word?number=${numOfWords}`)
       .then((res) => {
-        setWords(res.data, res.data.length);
+        setWords(
+          res.data.map((item) => {
+            return { word: item, isEnabled: false };
+          })
+        );
       })
       .catch((error) => Alert.alert("Oops", "error loading words"));
 
@@ -34,6 +38,9 @@ function WordGenScreen(props) {
       ? Alert.alert("Oops!", "minimum, 1 word")
       : setNumOfWords(numOfWords - 1);
   };
+  const toggleSwitch = (word) => {
+    setWords(...words, !word.isEnabled);
+  };
 
   return (
     <View>
@@ -44,8 +51,11 @@ function WordGenScreen(props) {
       <ScrollView>
         {words?.map((word) => (
           <View>
-            <Switch />
-            <Text key={word}>{word}</Text>
+            <Switch
+              value={word.isEnabled}
+              onValueChange={() => toggleSwitch(word)}
+            />
+            <Text key={word.word}>{word.word}</Text>
           </View>
         ))}
       </ScrollView>
