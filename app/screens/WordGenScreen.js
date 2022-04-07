@@ -1,5 +1,5 @@
-import react, { useState, useEffect } from "react";
-import axios, { Axios } from "axios";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,6 @@ import {
   Button,
   Alert,
   Switch,
-  TouchableOpacity,
 } from "react-native";
 
 function WordGenScreen(props) {
