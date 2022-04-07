@@ -53,23 +53,35 @@ function WordGenScreen(props) {
     );
   };
 
+  const addWord = () => {
+    axios
+      .get(`https://random-word-api.herokuapp.com/word?number=1`)
+      .then((res) => {
+        let newResult = words.map((item) => item);
+        newResult.push({ word: res.data[0], isEnabled: false });
+        setWords(newResult);
+      })
+      .catch((error) => Alert.alert("Oops", "error loading words"));
+  };
+
   return (
     <View>
-      <Button title="button" onPress={getWords} />
+      <Button title="Generate Words" onPress={getWords} />
       <Button title="+" onPress={increase} />
       <Text>{numOfWords}</Text>
       <Button title="-" onPress={decrease} />
       <ScrollView>
         {words?.map((word) => (
-          <View>
+          <View key={word.word}>
             <Switch
               value={word.isEnabled}
               onValueChange={() => toggleSwitch(word)}
             />
-            <Text key={word.word}>{word.word}</Text>
+            <Text>{word.word}</Text>
             <Button title="Remove" onPress={() => remove(word)} />
           </View>
         ))}
+        <Button title="add word" onPress={addWord} />
       </ScrollView>
     </View>
   );
