@@ -8,6 +8,7 @@ import {
   Button,
   Alert,
   Switch,
+  TouchableOpacity,
 } from "react-native";
 
 function WordGenScreen(props) {
@@ -66,7 +67,11 @@ function WordGenScreen(props) {
 
   return (
     <View>
-      <Button title="Generate Words" onPress={getWords} />
+      <Button
+        accessibilityRole="radio"
+        title="Generate Words"
+        onPress={getWords}
+      />
       <Button title="+" onPress={increase} />
       <Text>{numOfWords}</Text>
       <Button title="-" onPress={decrease} />
