@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import WordGenScreen from "./app/screens/WordGenScreen";
+import PaddleScreen from "./app/screens/PaddleScreen";
 
 //const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -16,6 +17,11 @@ export default function App() {
           name="WordGen"
           component={WordGenScreen}
           options={{ title: "WordGenn" }}
+        />
+        <Tab.Screen
+          name="Paddle"
+          component={PaddleScreen}
+          options={{ title: "Paddle" }}
         />
       </Tab.Navigator>
 
