@@ -66,14 +66,6 @@ function WordGenScreen(props) {
 
   return (
     <View>
-      <Button
-        accessibilityRole="radio"
-        title="Generate Words"
-        onPress={getWords}
-      />
-      <Button title="+" onPress={increase} />
-      <Text>{numOfWords}</Text>
-      <Button title="-" onPress={decrease} />
       <ScrollView style={{ height: "80%" }}>
         {words?.map((word) => (
           <View key={word.word}>
@@ -87,6 +79,14 @@ function WordGenScreen(props) {
         ))}
         <Button title="add word" onPress={addWord} />
       </ScrollView>
+      <Button title="+" onPress={increase} />
+      <Text>{numOfWords}</Text>
+      <Button title="-" onPress={decrease} />
+      <Button
+        accessibilityRole="radio"
+        title="Generate Words"
+        onPress={getWords}
+      />
     </View>
   );
 }
