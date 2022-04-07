@@ -74,7 +74,7 @@ function WordGenScreen(props) {
       <Button title="+" onPress={increase} />
       <Text>{numOfWords}</Text>
       <Button title="-" onPress={decrease} />
-      <ScrollView>
+      <ScrollView style={{ height: "80%" }}>
         {words?.map((word) => (
           <View key={word.word}>
             <Switch

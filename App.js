@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="WordGen">
+      <Tab.Navigator initialRouteName="WordGen" backgroundColor="blue">
         <Tab.Screen
           name="WordGen"
           component={WordGenScreen}
