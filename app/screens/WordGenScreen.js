@@ -68,7 +68,7 @@ function WordGenScreen(props) {
     <View>
       <ScrollView style={{ height: "80%" }}>
         {words?.map((word) => (
-          <View key={word.word}>
+          <View style={styles.word} key={word.word}>
             <Switch
               value={word.isEnabled}
               onValueChange={() => toggleSwitch(word)}
@@ -92,3 +92,11 @@ function WordGenScreen(props) {
 }
 
 export default WordGenScreen;
+
+const styles = StyleSheet.create({
+  word: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+});
