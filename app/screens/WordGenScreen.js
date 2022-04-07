@@ -8,6 +8,7 @@ import {
   Button,
   Alert,
   Switch,
+  Pressable,
 } from "react-native";
 
 function WordGenScreen(props) {
@@ -80,13 +81,13 @@ function WordGenScreen(props) {
         <Button title="add word" onPress={addWord} />
       </ScrollView>
       <Button title="+" onPress={increase} />
-      <Text>{numOfWords}</Text>
+      <Text style={{ textAlign: "center" }}>{numOfWords}</Text>
       <Button title="-" onPress={decrease} />
-      <Button
-        accessibilityRole="radio"
-        title="Generate Words"
-        onPress={getWords}
-      />
+      <Pressable style={styles.button} onPress={getWords}>
+        <Text style={{ color: "white", width: "100%", textAlign: "center" }}>
+          Generate Words
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -98,5 +99,15 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  button: {
+    alignSelf: "center",
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    borderRadius: 4,
+    elevation: 5,
+    backgroundColor: "dodgerblue",
   },
 });
