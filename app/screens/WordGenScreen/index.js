@@ -11,10 +11,12 @@ import {
   Pressable,
 } from "react-native";
 import Icon from "@expo/vector-icons/AntDesign"
+import infoText from "./infoText";
 
 function WordGenScreen(props) {
   const [words, setWords] = useState([]);
   const [numOfWords, setNumOfWords] = useState(3);
+  const [info, setInfo] = useState(true);
 
   const getWords = () =>
     axios
@@ -68,7 +70,13 @@ function WordGenScreen(props) {
 
   return (
     <View>
-      <Icon name={'infocirlceo'} size={20} color={'blue'} />
+      <Icon name={'infocirlceo'} size={20} color={'blue'}/>
+      <View style={styles.info}>
+        <Text style={{color:'white', textAlign:'center'}}>Hello </Text>
+        <View style={{borderBottomColor: 'white', borderBottomWidth: 2, margin:10}}/>
+        <Text style={{color:'white'}}>{infoText} </Text>
+      </View>
+
       <ScrollView style={{ height: "75%" }}>
         {words?.map((word) => (
           <View style={styles.word} key={word.word}>
@@ -96,6 +104,7 @@ function WordGenScreen(props) {
     </View>
   );
 }
+import info from "./infoText";
 
 export default WordGenScreen;
 
@@ -115,4 +124,14 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: "dodgerblue",
   },
+  info: {
+    padding: 10,
+    position: 'absolute',
+    backgroundColor: 'blue',
+    width: '90%',
+    height: '80%',
+    alignSelf: 'center',
+    top:20,
+    elevation:10
+  }
 });
