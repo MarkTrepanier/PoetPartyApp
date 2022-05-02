@@ -75,7 +75,7 @@ function WordGenScreen(props) {
   return (
     <View>
       {/* info button */}
-      <Pressable onPress={showInfo}>
+      <Pressable onPress={showInfo} style={{width:20}}>
         <Icon name={'infocirlceo'} size={20} color={'blue'}/>
       </Pressable>
       {/* INFO WINDOW */}
