@@ -120,7 +120,6 @@ function WordGenScreen(props) {
     </View>
   );
 }
-import info from "./infoText";
 
 export default WordGenScreen;
 
