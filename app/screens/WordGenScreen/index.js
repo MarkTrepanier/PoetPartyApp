@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     height: '80%',
     alignSelf: 'center',
     top:20,
-    elevation:10
+    elevation:5,
+    zIndex:5
   }
 });
