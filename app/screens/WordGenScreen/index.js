@@ -16,7 +16,7 @@ import infoText from "./infoText";
 function WordGenScreen(props) {
   const [words, setWords] = useState([]);
   const [numOfWords, setNumOfWords] = useState(3);
-  const [info, setInfo] = useState(true);
+  const [info, setInfo] = useState(false);
 
   const getWords = () =>
     axios
@@ -68,14 +68,24 @@ function WordGenScreen(props) {
       .catch((error) => Alert.alert("Oops", "error loading words"));
   };
 
+  const showInfo = () => {
+    setInfo(!info)
+  }
+
   return (
     <View>
-      <Icon name={'infocirlceo'} size={20} color={'blue'}/>
-      <View style={styles.info}>
+      <Pressable onPress={showInfo}>
+        <Icon name={'infocirlceo'} size={20} color={'blue'}/>
+      </Pressable>
+      
+      {info?<View style={styles.info}>
         <Text style={{color:'white', textAlign:'center'}}>Hello </Text>
+        <Pressable onPress={showInfo}>
+          <Icon name={'closecircle'} size={20} color={'white'}/>
+        </Pressable>
         <View style={{borderBottomColor: 'white', borderBottomWidth: 2, margin:10}}/>
         <Text style={{color:'white'}}>{infoText} </Text>
-      </View>
+      </View>:<></>}
 
       <ScrollView style={{ height: "75%" }}>
         {words?.map((word) => (
