@@ -1,18 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "@expo/vector-icons/AntDesign"
 
 import WordGenScreen from "./app/screens/WordGenScreen";
 import PaddleScreen from "./app/screens/PaddleScreen";
-import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const Tab = createBottomTabNavigator();
 export default function App() {
   return (
-    <NavigationContainer
-    >
+    <NavigationContainer>
       
       <Tab.Navigator  style={{backgroundColor:'red'}}
       initialRouteName="WordGen"
@@ -33,12 +30,12 @@ export default function App() {
         },
         tabBarActiveTintColor: 'blue',
         tabBarInactiveTintColor: 'grey',
+        justifyContent:"flex-start",
         tabBarStyle:{
           backgroundColor:'#f4f4f4',
         }
       })}
       >
-        
         <Tab.Screen
           name="WordGen"
           component={WordGenScreen}

@@ -10,6 +10,7 @@ import {
   Switch,
   Pressable,
 } from "react-native";
+import Icon from "@expo/vector-icons/AntDesign"
 
 function WordGenScreen(props) {
   const [words, setWords] = useState([]);
@@ -67,7 +68,8 @@ function WordGenScreen(props) {
 
   return (
     <View>
-      <ScrollView style={{ height: "80%" }}>
+      <Icon name={'infocirlceo'} size={20} color={'blue'} />
+      <ScrollView style={{ height: "75%" }}>
         {words?.map((word) => (
           <View style={styles.word} key={word.word}>
             <Switch
@@ -80,14 +82,17 @@ function WordGenScreen(props) {
         ))}
         <Button title="add word" onPress={addWord} />
       </ScrollView>
-      <Button title="+" onPress={increase} />
-      <Text style={{ textAlign: "center" }}>{numOfWords}</Text>
-      <Button title="-" onPress={decrease} />
-      <Pressable style={styles.button} onPress={getWords}>
-        <Text style={{ color: "white", width: "100%", textAlign: "center" }}>
-          Generate Words
-        </Text>
-      </Pressable>
+
+      <View >
+        <Button title="+" onPress={increase} />
+        <Text style={{ textAlign: "center" }}>{numOfWords}</Text>
+        <Button title="-" onPress={decrease} />
+        <Pressable style={styles.button} onPress={getWords}>
+          <Text style={{ color: "white", width: "100%", textAlign: "center" }}>
+            Generate Words
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
