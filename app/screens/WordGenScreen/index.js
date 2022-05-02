@@ -16,7 +16,7 @@ import infoText from "./infoText";
 function WordGenScreen(props) {
   const [words, setWords] = useState([]);
   const [numOfWords, setNumOfWords] = useState(3);
-  const [info, setInfo] = useState(false);
+  const [info, setInfo] = useState(true);
 
   const getWords = () =>
     axios
@@ -74,19 +74,24 @@ function WordGenScreen(props) {
 
   return (
     <View>
+      {/* info button */}
       <Pressable onPress={showInfo}>
         <Icon name={'infocirlceo'} size={20} color={'blue'}/>
       </Pressable>
-      
+      {/* INFO WINDOW */}
       {info?<View style={styles.info}>
-        <Text style={{color:'white', textAlign:'center'}}>Hello </Text>
-        <Pressable onPress={showInfo}>
-          <Icon name={'closecircle'} size={20} color={'white'}/>
-        </Pressable>
+        <View style={{flexDirection:'row', justifyContent:'center'}}>
+          <Pressable onPress={showInfo} style={{position:'absolute',right:1}}>
+            <Icon name={'closecircle'} size={20} color={'white'}/>
+          </Pressable>
+          <Text style={{color:'white', }}>Hello </Text>
+        </View>
+        {/* border */}
         <View style={{borderBottomColor: 'white', borderBottomWidth: 2, margin:10}}/>
         <Text style={{color:'white'}}>{infoText} </Text>
       </View>:<></>}
 
+      {/* words list */}
       <ScrollView style={{ height: "75%" }}>
         {words?.map((word) => (
           <View style={styles.word} key={word.word}>
@@ -100,7 +105,8 @@ function WordGenScreen(props) {
         ))}
         <Button title="add word" onPress={addWord} />
       </ScrollView>
-
+      
+      {/* Genn Control Area */}
       <View >
         <Button title="+" onPress={increase} />
         <Text style={{ textAlign: "center" }}>{numOfWords}</Text>
