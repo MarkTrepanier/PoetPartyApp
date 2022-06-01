@@ -18,7 +18,7 @@ function WordGenScreen(props) {
   const [words, setWords] = useState([]);
   const [numOfWords, setNumOfWords] = useState(3);
   const [info, setInfo] = useState(true);
-  console.log(`${RANDOM_WORD_API}number=${numOfWords}`)
+  //todo add define/setdefine useState and define window connected to words-api. connect words api with .env
   const getWords = () =>
     axios
       .get(`${RANDOM_WORD_API}number=${numOfWords}`)
