@@ -12,15 +12,16 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/AntDesign"
 import infoText from "./infoText";
+import {RANDOM_WORD_API} from "@env"
 
 function WordGenScreen(props) {
   const [words, setWords] = useState([]);
   const [numOfWords, setNumOfWords] = useState(3);
   const [info, setInfo] = useState(true);
-
+  console.log(`${RANDOM_WORD_API}number=${numOfWords}`)
   const getWords = () =>
     axios
-      .get(`https://random-word-api.herokuapp.com/word?number=${numOfWords}`)
+      .get(`${RANDOM_WORD_API}number=${numOfWords}`)
       .then((res) => {
         setWords(
           res.data.map((item) => {
@@ -59,7 +60,7 @@ function WordGenScreen(props) {
 
   const addWord = () => {
     axios
-      .get(`https://random-word-api.herokuapp.com/word?number=1`)
+      .get(`${RANDOM_WORD_API}number=1`)
       .then((res) => {
         let newResult = words.map((item) => item);
         newResult.push({ word: res.data[0], isEnabled: false });
