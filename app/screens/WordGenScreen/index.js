@@ -19,35 +19,28 @@ function WordGenScreen(props) {
   const [numOfWords, setNumOfWords] = useState(3);
   const [info, setInfo] = useState(true);
   const [defWindow, setDefWindow]= useState(false);
-  const [def, setDef] = useState("")
+  const [def, setDef] = useState("no definition found")
 
 
   //todo add define/setdefine useState and define window connected to words-api. connect words api with .env
   const getDefinition = (word) =>{
-    let define = ""
-    axios.get(`${WORD_DEF_API}${item}/definitions`,{
-      headers: {
-        'X-RapidAPI-Host':DEF_HOST,
-        'X-RapidAPI-Key':DEF_KEY
-      }
-     }).then(res=> {define = res.data.definitions[0].definition}).catch(()=>{define ="no def found"})
-     return define
+    axios.get(`${WORD_DEF_API}${word}/definitions`,{
+          headers: {
+            'X-RapidAPI-Host':DEF_HOST,
+            'X-RapidAPI-Key':DEF_KEY
+          }
+         }).then(res=>{console.log(res.data.definitions[0].definition)})
+         .catch(()=>console.log("no definition found"))
   }
-  const getWords = async () =>
-    await axios
+  const getWords = () =>
+    axios
       .get(`${RANDOM_WORD_API}number=${numOfWords}`)
       .then((res) => {
-        let arr = []
-        res.data.map(item=>{
-          axios.get(`${WORD_DEF_API}${item}/definitions`,{
-            headers: {
-              'X-RapidAPI-Host':DEF_HOST,
-              'X-RapidAPI-Key':DEF_KEY
-            }
-           })
-            .then(def => {arr.push({ word: item, isEnabled: false, definition: def.data.definitions[0].definition})})
-            .catch(()=>{arr.push({word: item, isEnabled: false, definition: "no definition found"})});
-        }).then(setWords(arr)).catch(()=>{console.log(...words)})
+        setWords(
+          res.data.map((item) => {
+            return { word: item, isEnabled: false };
+          })
+        );
       })
       .catch((error) => Alert.alert("Oops", "error loading words"));
 
@@ -127,6 +120,7 @@ function WordGenScreen(props) {
             />
             <Text>{word.word}</Text>
             <Button title="Remove" onPress={() => remove(word)} />
+            <Button title="define" onPress={() => getDefinition(word.word)} />
           </View>
         ))}
         <Button title="add word" onPress={addWord} />
@@ -177,3 +171,15 @@ const styles = StyleSheet.create({
     zIndex:5
   }
 });
+
+// let arr = []
+// res.data.map(item=>{
+//   axios.get(`${WORD_DEF_API}${item}/definitions`,{
+//     headers: {
+//       'X-RapidAPI-Host':DEF_HOST,
+//       'X-RapidAPI-Key':DEF_KEY
+//     }
+//    })
+//     .then(def => {arr.push({ word: item, isEnabled: false, definition: def.data.definitions[0].definition})})
+//     .catch(()=>{arr.push({word: item, isEnabled: false, definition: "no definition found"})});
+// }).then(setWords(arr)).catch(()=>{console.log(...words)})
