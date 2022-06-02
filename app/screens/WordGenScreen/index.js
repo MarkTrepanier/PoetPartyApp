@@ -23,31 +23,37 @@ function WordGenScreen(props) {
 
 
   //todo add define/setdefine useState and define window connected to words-api. connect words api with .env
-  const getDefinition = async (word)=>{
+  const getDefinition = (word) =>{
     let define = ""
-    await axios.get(`${WORD_DEF_API}${word}/definitions`,{
+    axios.get(`${WORD_DEF_API}${item}/definitions`,{
       headers: {
         'X-RapidAPI-Host':DEF_HOST,
         'X-RapidAPI-Key':DEF_KEY
       }
-     }).then(res=> {define = res.data}).catch(()=>{define ="no def found"})
+     }).then(res=> {define = res.data.definitions[0].definition}).catch(()=>{define ="no def found"})
      return define
   }
-  const getWords = async() =>
+  const getWords = async () =>
     await axios
       .get(`${RANDOM_WORD_API}number=${numOfWords}`)
       .then((res) => {
-        setWords(
-          res.data.map((item) => {
-            return { word: item, isEnabled: false, definition: getDefinition(item) };
-          })
-        );
+        let arr = []
+        res.data.map(item=>{
+          axios.get(`${WORD_DEF_API}${item}/definitions`,{
+            headers: {
+              'X-RapidAPI-Host':DEF_HOST,
+              'X-RapidAPI-Key':DEF_KEY
+            }
+           })
+            .then(def => {arr.push({ word: item, isEnabled: false, definition: def.data.definitions[0].definition})})
+            .catch(()=>{arr.push({word: item, isEnabled: false, definition: "no definition found"})});
+        }).then(setWords(arr)).catch(()=>{console.log(...words)})
       })
       .catch((error) => Alert.alert("Oops", "error loading words"));
 
-  useEffect(() => {
-    getWords().then(()=>words?.map((word)=>console.log(word)));
-  }, []);
+  // useEffect(() => {
+  //   getWords();
+  // }, []);
 
   const increase = () => {
     setNumOfWords(numOfWords + 1);
@@ -72,7 +78,7 @@ function WordGenScreen(props) {
     );
   };
 
-  const addWord = () => {
+  const addWord = async () => {
     axios
       .get(`${RANDOM_WORD_API}number=1`)
       .then((res) => {
@@ -81,6 +87,7 @@ function WordGenScreen(props) {
         setWords(newResult);
       })
       .catch((error) => Alert.alert("Oops", "error loading words"));
+      console.log(words)
   };
 
   const toggleInfo = () => {
