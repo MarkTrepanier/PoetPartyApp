@@ -12,27 +12,41 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/AntDesign"
 import infoText from "./infoText";
-import {RANDOM_WORD_API} from "@env"
+import {RANDOM_WORD_API, WORD_DEF_API, DEF_HOST, DEF_KEY} from "@env"
 
 function WordGenScreen(props) {
   const [words, setWords] = useState([]);
   const [numOfWords, setNumOfWords] = useState(3);
   const [info, setInfo] = useState(true);
+  const [defWindow, setDefWindow]= useState(false);
+  const [def, setDef] = useState("")
+
+
   //todo add define/setdefine useState and define window connected to words-api. connect words api with .env
-  const getWords = () =>
-    axios
+  const getDefinition = async (word)=>{
+    let define = ""
+    await axios.get(`${WORD_DEF_API}${word}/definitions`,{
+      headers: {
+        'X-RapidAPI-Host':DEF_HOST,
+        'X-RapidAPI-Key':DEF_KEY
+      }
+     }).then(res=> {define = res.data}).catch(()=>{define ="no def found"})
+     return define
+  }
+  const getWords = async() =>
+    await axios
       .get(`${RANDOM_WORD_API}number=${numOfWords}`)
       .then((res) => {
         setWords(
           res.data.map((item) => {
-            return { word: item, isEnabled: false };
+            return { word: item, isEnabled: false, definition: getDefinition(item) };
           })
         );
       })
       .catch((error) => Alert.alert("Oops", "error loading words"));
 
   useEffect(() => {
-    getWords();
+    getWords().then(()=>words?.map((word)=>console.log(word)));
   }, []);
 
   const increase = () => {
@@ -69,20 +83,24 @@ function WordGenScreen(props) {
       .catch((error) => Alert.alert("Oops", "error loading words"));
   };
 
-  const showInfo = () => {
+  const toggleInfo = () => {
     setInfo(!info)
+  }
+
+  const toggleDef = () => {
+    setDefWindow(!defWindow)
   }
 
   return (
     <View>
       {/* info button */}
-      <Pressable onPress={showInfo} style={{width:20}}>
+      <Pressable onPress={toggleInfo} style={{width:20}}>
         <Icon name={'infocirlceo'} size={20} color={'blue'}/>
       </Pressable>
       {/* INFO WINDOW */}
       {info?<View style={styles.info}>
         <View style={{flexDirection:'row', justifyContent:'center'}}>
-          <Pressable onPress={showInfo} style={{position:'absolute',right:1}}>
+          <Pressable onPress={toggleInfo} style={{position:'absolute',right:1}}>
             <Icon name={'closecircle'} size={20} color={'white'}/>
           </Pressable>
           <Text style={{color:'white', }}>Hello </Text>

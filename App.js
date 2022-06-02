@@ -5,10 +5,9 @@ import Icon from "@expo/vector-icons/AntDesign"
 
 import WordGenScreen from "./app/screens/WordGenScreen";
 import PaddleScreen from "./app/screens/PaddleScreen";
-import{test} from "@env";
+
 const Tab = createBottomTabNavigator();
 export default function App() {
-  console.log(test||"hello")
   return (
     <NavigationContainer>
       
