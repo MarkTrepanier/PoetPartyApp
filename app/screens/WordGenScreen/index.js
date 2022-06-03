@@ -29,8 +29,8 @@ function WordGenScreen(props) {
             'X-RapidAPI-Host':DEF_HOST,
             'X-RapidAPI-Key':DEF_KEY
           }
-         }).then(res=>{setDef(res.data.definitions[0].definition)})
-         .catch(()=>console.log("no definition found"))
+         }).then(res=>{setDef(`${word}: ${res.data.definitions[0].definition}`)})
+         .catch(()=>setDef(`${word}: sorry, definition not found`))
   }
   const getWords = () =>
     axios
