@@ -29,7 +29,7 @@ function WordGenScreen(props) {
             'X-RapidAPI-Host':DEF_HOST,
             'X-RapidAPI-Key':DEF_KEY
           }
-         }).then(res=>{console.log(res.data.definitions[0].definition)})
+         }).then(res=>{setDef(res.data.definitions[0].definition)})
          .catch(()=>console.log("no definition found"))
   }
   const getWords = () =>
@@ -91,6 +91,11 @@ function WordGenScreen(props) {
     setDefWindow(!defWindow)
   }
 
+  const handleDef = (word)=>{
+    toggleDef()
+    getDefinition(word)
+  }
+
   return (
     <View>
       {/* info button */}
@@ -110,6 +115,18 @@ function WordGenScreen(props) {
         <Text style={{color:'white'}}>{infoText} </Text>
       </View>:<></>}
 
+      {defWindow?<View style={styles.info}>
+        <View style={{flexDirection:'row', justifyContent:'center'}}>
+          <Pressable onPress={toggleDef} style={{position:'absolute',right:1}}>
+            <Icon name={'closecircle'} size={20} color={'white'}/>
+          </Pressable>
+          <Text style={{color:'white', }}>definition</Text>
+        </View>
+        {/* border */}
+        <View style={{borderBottomColor: 'white', borderBottomWidth: 2, margin:10}}/>
+        <Text style={{color:'white'}}>{def} </Text>
+      </View>:<></>}
+
       {/* words list */}
       <ScrollView style={{ height: "75%" }}>
         {words?.map((word) => (
@@ -119,8 +136,10 @@ function WordGenScreen(props) {
               onValueChange={() => toggleSwitch(word)}
             />
             <Text>{word.word}</Text>
+            <Pressable onPress={()=>handleDef(word.word)} style={{width:20}}>
+              <Icon name={'questioncircleo'} size={20} color={'blue'}/>
+            </Pressable>
             <Button title="Remove" onPress={() => remove(word)} />
-            <Button title="define" onPress={() => getDefinition(word.word)} />
           </View>
         ))}
         <Button title="add word" onPress={addWord} />
@@ -171,15 +190,3 @@ const styles = StyleSheet.create({
     zIndex:5
   }
 });
-
-// let arr = []
-// res.data.map(item=>{
-//   axios.get(`${WORD_DEF_API}${item}/definitions`,{
-//     headers: {
-//       'X-RapidAPI-Host':DEF_HOST,
-//       'X-RapidAPI-Key':DEF_KEY
-//     }
-//    })
-//     .then(def => {arr.push({ word: item, isEnabled: false, definition: def.data.definitions[0].definition})})
-//     .catch(()=>{arr.push({word: item, isEnabled: false, definition: "no definition found"})});
-// }).then(setWords(arr)).catch(()=>{console.log(...words)})
