@@ -136,7 +136,7 @@ function WordGenScreen(props) {
               onValueChange={() => toggleSwitch(word)}
             />
             <Text>{word.word}</Text>
-            <Pressable onPress={()=>handleDef(word.word)} style={{width:20}}>
+            <Pressable onPress={()=>handleDef(word.word)} style={{width:20, position: "absolute", right:100,top:15}}>
               <Icon name={'questioncircleo'} size={20} color={'blue'}/>
             </Pressable>
             <Button title="Remove" onPress={() => remove(word)} />
@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: 10,
+    borderRadius:10,
     position: 'absolute',
     backgroundColor: 'blue',
     width: '90%',
